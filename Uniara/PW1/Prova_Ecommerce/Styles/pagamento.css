@@ -1,0 +1,50 @@
+
+.Produtos{
+    display: flex;
+    background-color: white;
+    border: 3px solid black;
+    width: 20%;
+    float: left;
+    margin-top: 2%;
+    flex-direction: column;
+    margin-left: 21%;
+}
+
+.Produtos-Descricao{
+    background-color: rgb(211, 211, 211);
+}
+
+.Produtos-Titulo{
+    color: black;
+    font-weight: bold;
+    font-size: 25px;
+    text-align: center;
+}
+
+.Produtos-Texto{
+    font-size: 20px;
+    text-align: center;
+} 
+
+.Botao-Finalizar-Compra{
+    background-color: #4CAF50;
+    color: white;
+    padding: 1%;
+    margin-left: 5%;
+    margin-top: 2%;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 20px;
+}
+
+
+.Forms{
+    margin-left: 45%;
+    margin-top: 5%;
+}
+
+.Forms-Text{
+    font-size: 23px;
+    color: white;
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/Styles/pagamento.css">
+    <title>Velho Barreiro 1L</title>
+</head>
+<body style="background-color:orangered;">
+    <a href="/index.html"><img src="/Images/logo/Logo.png" alt="logo" style="margin-left: 45%; width: 125px;"></a>
+    <h1 style="text-align: center; color: white;">Você escolheu para comprar: </h1>
+
+    <div class="Produtos">
+        <img src="/Images/Cachaça/VelhoBarreiro.png" alt="Velho Barreiro" width="80%" style="margin-left: 09%;"/>
+        <div class="Produtos-Descricao">
+            <h5 class="Produtos-Titulo">Velho Barreiro</h5>
+            <p class="Produtos-Texto">1 Litro </p>
+        </div>
+    </div>
+
+    <div class="Forms">
+        <form>
+            <table >
+                <tr>
+                    <td class="Forms-Text">Nome:</td>
+                    <td><input type="text" id="nome" placeholder="Nome" required></td>
+                </tr>
+                <tr>
+                    <td class="Forms-Text">Cidade:</td>
+                    <td><input type="text" id="cidade" placeholder="Cidade" required></td>
+                </tr>
+                <tr>
+                    <td class="Forms-Text">Endereço:</td>
+                    <td><input type="text" id="endereco" placeholder="Endereço" required></td>
+                </tr>
+                <tr>
+                    <td class="Forms-Text">Numero:</td>
+                    <td><input type="text" id="numero" placeholder="Numero" required></td>
+                </tr>
+                <tr>
+                    <td class="Forms-Text">Complemento:</td>
+                    <td><input type="text" placeholder="Complemento"></td>
+                </tr>
+                <tr>
+                    <td class="Forms-Text">Idade:</td>
+                    <td><input type="text" id="idade" placeholder="Idade" onblur="VerificaIdade()" required></td>
+                </tr>
+                <tr>
+                    <td class="Forms-Text">Quantidade:</td>
+                    <td><input type="number" id="quantidade"></td>
+                </tr>
+            </table>
+
+            <h1 style="color:white;">
+                Preço: R$12,90 
+            </h1>
+
+            <button type="submit" id="finalizaCompra" class="Botao-Finalizar-Compra" onclick="FinalizarCompra()">Finalizar Compra</button>
+
+        </form>
+    </div>
+</body>
+
+<script>
+function VerificaIdade(){
+    var idade = document.getElementById("idade").value
+    var botaoFinaliza = document.getElementById("finalizaCompra")
+
+    if(idade < 18 ){
+        alert("Você nao pode comprar  bebida alcoolicas!!!")
+        botaoFinaliza.style.display = "none"
+    }
+}
+
+function FinalizarCompra(){
+    var nome = document.getElementById("nome").value
+    var cidade = document.getElementById("cidade").value
+    var endereco = document.getElementById("endereco").value
+    var idade = document.getElementById("idade").value
+    var numero = document.getElementById("numero").value
+    var qtd = document.getElementById("quantidade").value
+
+    var precoVelhoBarreiro = 12.9
+
+
+    if(qtd < 1 || nome == "" || cidade == "" || endereco == "" || idade == "" || numero == "")
+        alert("Insira dados corretos")
+    else{
+        alert("Voce comprou e o total foi: " + qtd * precoVelhoBarreiro + "R$")
+    }
+}
+</script>
+</html>
