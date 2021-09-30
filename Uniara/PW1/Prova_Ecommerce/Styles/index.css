@@ -1,0 +1,45 @@
+.Menu{
+    color: black;
+    font-size: 40px;
+    text-decoration: none;
+}
+
+
+
+.Produtos{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 3px solid black;
+    width: 15%;
+    float: left;
+    margin-left: 1%;
+    margin-top: 2%;
+}
+
+.Produtos-Descricao{
+    background-color: rgb(211, 211, 211);
+}
+
+.Produtos-Titulo{
+    color: black;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+}
+
+.Produtos-Texto{
+    font-size: 25px;
+    text-align: center;
+}
+
+.Produtos-Botao{
+    background-color: #4CAF50;
+    color: white;
+    padding: 7%;
+    margin: 4%;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 20px;
+}
