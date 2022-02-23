@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercicios</title>
+</head>
+<body>
+    <div>
+        <h1>Inverter numeros</h1>
+        <label for="">Numero 1:</label><textarea rows="1" id="num1"></textarea>
+        <button type="button" onclick="Inverte()">Inverter</button>
+        <label for="">Numero 2:</label><textarea rows="1" id="num2"></textarea>
+    </div>
+
+    <div>
+        <h1>Gerar tabuada</h1>
+
+        <select id="tabuada">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+
+        <button type="button" onclick="gerarTabuada()">Gerar</button>
+        <h3 id="valoresTabuada"></h3>
+    </div>
+</body>
+</html>
+
+<script>
+function gerarTabuada(){
+    var numeroTabuada = parseInt(document.getElementById("tabuada").value);
+
+
+    for( i = 0; i <= 10; i++){
+        document.getElementById("valoresTabuada").innerHTML += numeroTabuada + " X " + i + " = " + i*numeroTabuada + "<br>";
+    }
+}
+
+
+function Inverte(){
+    var num1 = document.getElementById("num1").value;
+    var num2 = document.getElementById("num2").value;
+
+    var aux = num1;
+    num1 = num2;
+    num2 = aux;
+
+    document.getElementById("num2").value = num2;
+    document.getElementById("num1").value = num1;
+}
+</script>
