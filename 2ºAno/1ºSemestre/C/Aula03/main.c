@@ -44,21 +44,24 @@ int main(int argc, char *argv[]) {
 
 			printf("Digite o segundo numero: ");
 			scanf("%f", &b);   
-    		}
+    	}
 	
 		switch(operacao){
 			case 1: 
 				soma = somar(a,b);
 				printf("Resultado soma: %.2f\n", soma);
 				break;
+				
 			case 2: 
 				subtrai = subtrair(a,b);
 				printf("Resultado subtracao: %.2f\n", subtrai);
 				break;
+				
 			case 3: 
 				multiplica = multiplicar(a,b);
 				printf("Resultado multiplicacao: %.2f\n", multiplica);
 				break;
+				
 			case 4: 
 				divide = dividir(a,b);
 				if(divide != -100)
@@ -66,12 +69,15 @@ int main(int argc, char *argv[]) {
 				else
 				    printf("Impossivel dividir por zero, tente novamente!\n");
 				break;
+				
 			case 5:
 			    break;
+			    
 			default: 
 			    printf("\nInsira um numero correto\n");
 			    break;
 		}	
+		
 	}while(operacao != 5);
 
 	return 0;
