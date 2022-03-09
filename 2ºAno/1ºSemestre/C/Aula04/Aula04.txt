@@ -1,0 +1,112 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define tamanhoLinha 3
+#define tamanhoColuna 3
+
+void PopulaMatriz(int matriz[tamanhoLinha][tamanhoColuna]){
+	int linha, coluna;
+	
+	for(linha = 0; linha < tamanhoLinha; linha++)
+		for(coluna = 0; coluna < tamanhoColuna; coluna++)
+			matriz[linha][coluna] = rand() % 100;
+}
+
+void MostraMatriz(int matriz[tamanhoLinha][tamanhoColuna]){
+	int linha, coluna;
+	
+	printf("\n------MATRIZ------\n");
+	for(linha = 0; linha < tamanhoLinha; linha++){
+	    for(coluna = 0; coluna < tamanhoColuna; coluna++){
+	        printf("%3d", matriz[linha][coluna] );
+	    }
+	    printf("\n");
+	}
+}
+
+void MostraDiagonalPrincipal(int matriz[tamanhoLinha][tamanhoColuna]){
+	int linha;
+	
+	printf("\n------Diagonal principal------\n");
+	for(linha = 0; linha < tamanhoLinha; linha++)
+		printf("matriz[%i][%i] = %i\n", linha, linha , matriz[linha][linha] );
+}
+
+void MostraDiagonalSecundaria(int matriz[tamanhoLinha][tamanhoColuna]){
+	int linha;
+	
+	printf("\n------Diagonal secundaria------\n");
+	for(linha = 0; linha < tamanhoLinha; linha++)
+		printf("matriz[%i][%i] = %i\n", linha, linha - 1 - 1 , matriz[linha][tamanhoLinha - 1 - linha]);
+}
+
+
+int MostraMaiorNumero(int matriz[tamanhoLinha][tamanhoColuna]){
+	int linha, coluna, maior = 0;
+	
+	for(linha = 0; linha < tamanhoLinha; linha++)
+		for(coluna = 0; coluna < tamanhoColuna; coluna++)
+			if(matriz[linha][coluna] > maior)
+			    maior = matriz[linha][coluna];
+			    
+    return maior;
+}
+
+int MostraMenorNumero(int matriz[tamanhoLinha][tamanhoColuna]){
+	int linha, coluna, menor = 9999999;
+	
+	for(linha = 0; linha < tamanhoLinha; linha++)
+	    for(coluna = 0; coluna < tamanhoColuna; coluna++)
+			if(matriz[linha][coluna] < menor)
+			    menor = matriz[linha][coluna];
+			    
+	return menor;
+}
+
+float MostraMedia(int matriz[tamanhoLinha][tamanhoColuna]){
+	int linha, coluna;
+	float media;
+	
+	for(linha = 0; linha < tamanhoLinha; linha++)
+		for(coluna = 0; coluna < tamanhoColuna; coluna++)
+			media += matriz[linha][coluna];
+			
+	return (media/(tamanhoLinha * tamanhoColuna));
+}
+
+
+int main() {
+	int matriz[tamanhoLinha][tamanhoColuna], escolha;
+	
+	PopulaMatriz(matriz);
+	
+	do{
+		printf("\n\n\nO que vc deseja fazer????\n0)Mostrar matriz\n1)Mostrar Diagonal principal\n2)Mostrar diagonal secundaria\n3)Mostrar maior numero da matriz\n4)Mostrar menor numero da matriz\n5)Mostrar media da matriz\n6)Sair\n");
+		scanf("%i", &escolha);
+		
+		switch(escolha){
+		case 0: 
+		    MostraMatriz(matriz);
+		    break;
+		case 1:
+			MostraDiagonalPrincipal(matriz);
+			break;
+		case 2:
+			MostraDiagonalSecundaria(matriz);
+			break;
+		case 3:
+	    	printf("\n\nMaior numero: %i \n\n\n", MostraMaiorNumero(matriz));
+			break;
+		case 4:
+			printf("\n\nMenor numero: %i \n\n\n", MostraMenorNumero(matriz));
+			break;
+		case 5: 
+			printf("\n\nMedia matriz: %.2f \n\n\n", MostraMedia(matriz));
+			break;
+		case 6: 
+			break;
+		}
+		
+	}while(escolha != 6);
+	
+	return 0;
+}
