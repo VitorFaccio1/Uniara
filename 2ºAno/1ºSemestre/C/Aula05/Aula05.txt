@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define ClearScreen() printf("\e[1;1H\e[2J");
+
+float Dividir(float a, float b);
+float Multiplicar(float a, float b);
+float Somar(float a, float b);
+float Subtrair(float a, float b);
+float Menu(int operacao, float a, float b);
+void MostrarTodasOperacoes(float a, float b);
+
+int main(int argc, char *argv[]) {
+	int operacao;
+	float a, b;
+	char tecla;
+	do{
+		printf("Calculadora\n");
+		printf("1)Somar\n2)Subtrair\n3)Multiplicar\n4)Dividir\n5)Mostrar todas operacoes\n6)Sair\n");
+		printf("Digite a operacao: ");
+		scanf("%d", &operacao);
+	
+		printf("\nResultado: %.2f", Menu(operacao, a, b));
+		printf("\nDigite qualquer letra e de Enter para continuar!!");
+		scanf(" %c", &tecla);
+		ClearScreen();
+	}while(operacao != 6);
+	return 0;
+}
+
+float Menu(int operacao, float a, float b){
+	float divide = 0;
+	if(operacao < 6){
+		printf("Digite o primeiro numero: ");
+		scanf("%f", &a);
+
+		printf("Digite o segundo numero: ");
+		scanf("%f", &b);   
+	}
+
+	switch(operacao){
+		case 1: 
+			return Somar(a,b);
+			break;
+			
+		case 2: 
+			return Subtrair(a,b);
+			break;
+			
+		case 3: 
+			return Multiplicar(a,b);
+			break;
+			
+		case 4: 
+			divide = Dividir(a,b);
+			if(divide != -100)
+			    return divide;
+			else
+			    printf("Impossivel dividir por zero, tente novamente!\n");
+			break;
+			
+		case 5:
+			MostrarTodasOperacoes(a,b);
+		    break;
+		    
+		case 6:
+		    break;
+		    
+		default: 
+		    printf("\nInsira um numero correto\n");
+		    break;
+	}	
+}
+
+float Dividir(float a, float b){
+	if(b != 0){
+		return (a / b);
+	}
+	else{
+		return (-100);		
+	}
+}
+
+float Multiplicar(float a, float b){
+	return (a * b);
+}
+
+float Somar(float a, float b){
+	return (a + b);
+}
+
+float Subtrair(float a, float b){
+	return (a - b);
+}
+
+void MostrarTodasOperacoes(float a, float b){
+	printf("Soma: %.2f\nSubtracao: %.2f\nMultiplicacao: %.2f\nDivisao: %.2f", Somar(a,b), Subtrair(a,b), Multiplicar(a,b), Dividir(a,b));
+}
