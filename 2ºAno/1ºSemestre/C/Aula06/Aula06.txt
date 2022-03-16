@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define tamanhoLinha 10
+#define tamanhoColuna 10
+
+void PopulaMatriz(int matriz[tamanhoLinha][tamanhoColuna]);
+void MostraMatriz(int matriz[tamanhoLinha][tamanhoColuna]);
+void MostraDiagonalPrincipal(int matriz[tamanhoLinha][tamanhoColuna]);
+void MostraDiagonalSecundaria(int matriz[tamanhoLinha][tamanhoColuna]);
+void MostraNumerosPares(int matriz[tamanhoLinha][tamanhoColuna]);
+void MostraNumerosImpares(int matriz[tamanhoLinha][tamanhoColuna]);
+
+int main() {
+	int matriz[tamanhoLinha][tamanhoColuna], escolha;
+	
+	PopulaMatriz(matriz);
+	
+	do{
+		printf("O que vc deseja fazer????\n0)Mostrar matriz\n1)Mostrar Diagonal principal\n2)Mostrar diagonal secundaria\n3)Mostrar numeros pares\n4)Mostrar numeros impares\n5)Sair\n");
+		scanf("%i", &escolha);
+		
+		switch(escolha){
+		case 0: 
+			printf("\n------------Matriz------------\n");
+		    MostraMatriz(matriz);
+		    printf("\n\n");
+		    break;
+		case 1:
+			printf("\n------------Diagonal principal------------\n");
+			MostraDiagonalPrincipal(matriz);
+			printf("\n\n");
+			break;
+		case 2:
+			printf("\n------------Diagonal secundaria------------\n");
+			MostraDiagonalSecundaria(matriz);
+			printf("\n\n");
+			break;
+		case 3:
+			printf("-----------Numeros pares-----------\n\n");
+	    	MostraNumerosPares(matriz);
+	    	printf("\n\n");
+			break;
+		case 4:
+			printf("-----------Numeros impares-----------\n\n");
+			MostraNumerosImpares(matriz);
+			printf("\n\n");
+			break;
+		case 5: 
+			printf("\n\nSaindo....");
+			break;
+		}
+		
+	}while(escolha != 5);
+	
+	return 0;
+}
+
+void PopulaMatriz(int matriz[tamanhoLinha][tamanhoColuna]){
+	int linha, coluna;
+	
+	for(linha = 0; linha < tamanhoLinha; linha++)
+		for(coluna = 0; coluna < tamanhoColuna; coluna++)
+			matriz[linha][coluna] = rand() % 100;
+}
+
+void MostraMatriz(int matriz[tamanhoLinha][tamanhoColuna]){
+	int linha, coluna;
+	
+	for(linha = 0; linha < tamanhoLinha; linha++){
+	    for(coluna = 0; coluna < tamanhoColuna; coluna++){
+	        printf("%3d", matriz[linha][coluna] );
+	    }
+	    printf("\n");
+	}
+}
+
+void MostraDiagonalPrincipal(int matriz[tamanhoLinha][tamanhoColuna]){
+	int linha, vetor[tamanhoLinha];
+	
+	for(linha = 0; linha < tamanhoLinha; linha++)
+		vetor[linha] = matriz[linha][linha];
+	
+	for(linha = 0; linha < tamanhoLinha; linha++)
+		printf("matriz[%i][%i] = %i\n", linha, linha , matriz[linha][linha] );
+}
+
+void MostraDiagonalSecundaria(int matriz[tamanhoLinha][tamanhoColuna]){
+	int linha, vetor[tamanhoLinha];
+	
+	for(linha = 0; linha < tamanhoLinha; linha++)
+	    vetor[linha] = matriz[linha][tamanhoLinha - 1 - linha];
+	    
+	for(linha = 0; linha < tamanhoLinha; linha++)
+		printf("matriz[%i][%i] = %i\n", linha, tamanhoLinha - linha - 1, vetor[linha]);
+}
+
+
+void MostraNumerosPares(int matriz[tamanhoLinha][tamanhoColuna]){
+    int linha, coluna, vetor[tamanhoLinha*tamanhoColuna], i = 0;
+	
+	for(linha = 0; linha < tamanhoLinha; linha++)
+	    for(coluna = 0; coluna < tamanhoColuna; coluna++)
+			if(matriz[linha][coluna] % 2 == 0){
+				vetor[i] = matriz[linha][coluna];
+				i++;
+			}	
+			
+	for(i = 0; i < tamanhoLinha*tamanhoColuna; i++)
+		if(vetor[i] % 2 == 0 && vetor[i] > 0 && vetor[i] < 100)		
+			printf("%i ", vetor[i]);
+}
+
+void MostraNumerosImpares(int matriz[tamanhoLinha][tamanhoColuna]){
+	int linha, coluna, vetor[tamanhoLinha*tamanhoColuna], i = 0;
+	
+	for(linha = 0; linha < tamanhoLinha; linha++)
+	    for(coluna = 0; coluna < tamanhoColuna; coluna++)
+			if(matriz[linha][coluna] % 2 == 1){
+				vetor[i] = matriz[linha][coluna];
+				i++;
+			}	
+			
+	for(i = 0; i < tamanhoLinha*tamanhoColuna; i++)
+		if(vetor[i] % 2 == 1 && vetor[i] > 0 && vetor[i] < 100)		
+			printf("%i ", vetor[i]);
+}
