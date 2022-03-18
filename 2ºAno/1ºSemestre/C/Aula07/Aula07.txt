@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+struct carro{
+	int id, ano;
+	char placa[7], marca[20], modelo[20];
+};
+
+struct carro carro;
+int main(int argc, char *argv[]) {
+
+	
+	int i = 0;
+	
+	printf("-----------Informe dados do carro-----------");
+	
+	printf("\nInforme a placa do teu carro: ");
+	fflush(stdin);
+	fgets(carro.placa, 7, stdin);
+	
+	printf("\nInforme a marca do teu carro: ");
+	fflush(stdin);
+	fgets(carro.marca, 20, stdin);
+	
+	printf("\nInforme o modelo do teu carro: ");
+	fflush(stdin);
+	fgets(carro.modelo, 20, stdin);
+	
+	printf("\nInforme o ano do teu carro: ");
+	fflush(stdin);
+	scanf("%i", &carro.ano);
+	
+	carro.id += 1;
+	
+	printf("\n---------Informacoes do teu carro---------");
+
+	printf("\nId do teu carro: %i", carro.id);
+	printf("\nAno do teu carro: %i", carro.ano);
+	printf("\nMarca do teu carro: %s",  carro.marca);
+	printf("\nModelo do teu carro: %s", carro.modelo);
+	printf("\nPlaca do teu carro: %s", carro.placa);
+
+	return 0;
+}
