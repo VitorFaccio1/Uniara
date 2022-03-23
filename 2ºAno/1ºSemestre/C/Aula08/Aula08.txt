@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define tamanhoMatriz 10
+
+void Menu();
+void PreencheMatriz(int matriz[tamanhoMatriz][tamanhoMatriz]);
+void MostraMatriz(int matriz[tamanhoMatriz][tamanhoMatriz]);
+void LocalizaNumero(int vetor[tamanhoMatriz][tamanhoMatriz]);
+
+int main(int argc, char *argv[]) {
+	Menu();
+	
+	return 0;
+}
+
+void Menu(){
+	int resposta;
+	int matriz[tamanhoMatriz][tamanhoMatriz];
+	
+	do{
+		printf("O que voce deseja fazer??\n0)Preencher vetor\n1)Exibe Vetor\n2)Localizar numero\n3)Sair\n");
+		fflush(stdin);
+		scanf("%i", &resposta);
+		
+		switch(resposta){
+			case 0:
+				PreencheMatriz(matriz);
+				printf("\n-------Vetor Preenchido-------\n\n");
+				break;
+			case 1: 
+				printf("\n\n-------Vetor-------\n");
+				MostraMatriz(matriz);
+				printf("\n\n");
+				break;
+			case 2:
+				LocalizaNumero(matriz);
+				printf("\n");
+				break;
+			case 3: 
+				printf("\nSaindo....\n");
+				break;
+			default:
+				printf("\nInsira uma opcao correta!\n");
+				break;
+		}
+	}while(resposta != 3);
+}
+
+void PreencheMatriz(int matriz[tamanhoMatriz][tamanhoMatriz]){
+	int i, j;
+	
+	for(i = 0; i < tamanhoMatriz; i++){
+		for(j = 0; j < tamanhoMatriz; j++){
+			matriz[i][j] = rand()%100;	
+		}
+	}
+}
+
+void MostraMatriz(int matriz[tamanhoMatriz][tamanhoMatriz]){
+	int i, j;
+	
+	for(i = 0; i < tamanhoMatriz; i++){
+		for(j = 0; j < tamanhoMatriz; j++){
+			printf("%3d", matriz[i][j]);	
+		}
+		printf("\n");
+	}
+}
+
+void LocalizaNumero(int matriz[tamanhoMatriz][tamanhoMatriz]){
+	int numeroEscolhido = 0, i, j, posicaoX, posicaoY;
+	
+	printf("Escolha um numero que deseja localizar: ");
+	fflush(stdin);
+	scanf("%i", &numeroEscolhido);
+	
+	for(i = 0; i < tamanhoMatriz; i++){
+		for(j = 0; j < tamanhoMatriz; j++){
+			if(matriz[i][j] == numeroEscolhido){
+				numeroEscolhido = 1;
+				posicaoX = i;
+				posicaoY = j;
+			}
+		}
+	}
+	
+	if(numeroEscolhido == 1)
+		printf("\nNumero Encontrado com sucesso na posicao [%i,%i]!!!\n", posicaoX, posicaoY);
+	else
+		printf("\nNumero nao encontrado!!!\n");
+}
