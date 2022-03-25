@@ -1,0 +1,134 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#define QuantidadeProdutosMaximo 100
+
+struct Produto{
+  int Id;
+  char Nome[50];
+  char Descricao[100];
+  float Preco;
+  char Data[10];
+  int Quantidade;
+};
+
+
+void Menu();
+struct Produto InsereProdutos();
+void AlteraProdutos();
+void ExcluiProdutos();
+void ListaProdutos();
+void PesquisaProdutos();
+
+int main(int argc, char *argv[]) {
+    setlocale(LC_ALL,"Portuguese");
+	Menu();
+	
+	return 0;
+}
+
+void Menu(){
+	int resposta;
+	struct Produto produtos[QuantidadeProdutosMaximo];
+	int contador = 0;
+	
+	do{
+		printf("O que você deseja fazer??\n1)Inserir Produtos\n2)Alterar Produtos\n3)Excluir produtos\n4)Pesquisar produtos\n5)Listar todos os produtos do estoque e de um departamento\n6)Sair\nEscolha: ");
+		fflush(stdin);
+		scanf("%i", &resposta);
+		
+		switch(resposta){
+			case 1:
+				printf("\n-------Inserir um produto-------\n\n");
+				produtos[contador] = InsereProdutos();
+				contador++;
+				break;
+			case 2: 
+				printf("\n-------Alterar um produto-------\n\n");
+				AlteraProdutos(produtos[QuantidadeProdutosMaximo]);
+				break;
+			case 3:
+				printf("\n-------Excluir um produto-------\n\n");
+				ExcluiProdutos(produtos[QuantidadeProdutosMaximo]);
+				contador--;
+				break;
+			case 4: 
+				printf("\n-------Pesquisar um produto-------\n\n");
+				PesquisaProdutos(produtos[QuantidadeProdutosMaximo]);
+				system("cls");
+				break;
+			case 5: 
+				printf("\n-------Lista de produtos-------\n\n");
+				ListaProdutos(produtos[QuantidadeProdutosMaximo]);
+				break;
+			case 6: 
+				printf("\nSaindo....\n");
+				break;
+			default:
+				printf("\nInsira uma opcao correta!\n");
+				break;
+		}
+	}while(resposta != 6);
+}
+
+struct Produto InsereProdutos(){
+	struct Produto produto;
+	
+	printf("Qual o nome do teu produto: ");
+	fflush(stdin);
+	fgets(produto.Nome, 50, stdin);
+	
+	printf("Qual a descrição do teu produto: ");
+	fflush(stdin);
+	fgets(produto.Nome, 100, stdin);
+	
+	printf("Qual o preço do teu produto: ");
+	fflush(stdin);
+	scanf("%f", &produto.Preco);
+	
+	printf("Qual a data de validade do teu produto: ");
+	fflush(stdin);
+	fgets(produto.Data, 10, stdin);
+	
+	printf("Qual o preço do teu produto: ");
+	fflush(stdin);
+	scanf("%i", &produto.Quantidade);
+	
+	return produto;
+}
+
+void AlteraProdutos(){
+	
+}
+
+void ExcluiProdutos(){
+	
+}
+
+void PesquisaProdutos(){
+	int escolha = 0;
+	
+	do{
+		printf("Você quer pesquisar o produto pelo: \n1)Id\n2)Nome\n3)Sair\nEscolha: ");
+		fflush(stdin);
+		scanf("%i", &escolha);
+	
+		if(escolha == 1){
+			
+		}else if(escolha == 2){
+			
+		}else if(escolha == 3)
+			break;
+		else
+			printf("\nInsira um opcao valida!!");
+			
+	}while(escolha != 3);
+}
+
+void ListaProdutos(){
+	int i;
+	
+	for(i = 0; i < QuantidadeProdutosMaximo; i++){
+		if()
+	}
+}
