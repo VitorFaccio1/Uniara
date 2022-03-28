@@ -19,6 +19,7 @@ void AlteraProdutos();
 void ExcluiProdutos();
 void ListaProdutos();
 void PesquisaProdutos();
+void MostraProduto(struct Produto produtos);
 
 int main(int argc, char *argv[]) {
     setlocale(LC_ALL,"Portuguese");
@@ -76,23 +77,27 @@ struct Produto InsereProdutos(){
 	
 	printf("Qual o nome do teu produto: ");
 	fflush(stdin);
-	fgets(produto.Nome, 50, stdin);
+	fgets( produto.Nome, 50, stdin);
+	getchar();
 	
 	printf("Qual a descrição do teu produto: ");
 	fflush(stdin);
-	fgets(produto.Nome, 100, stdin);
+	fgets( produto.Nome, 100, stdin);
+	getchar();
 	
 	printf("Qual o preço do teu produto: ");
 	fflush(stdin);
-	scanf("%f", &produto.Preco);
-	
+	scanf(" %f", &produto.Preco);
+
 	printf("Qual a data de validade do teu produto: ");
 	fflush(stdin);
-	fgets(produto.Data, 10, stdin);
+	fgets( produto.Data, 10, stdin);
+	getchar();
 	
 	printf("Qual o preço do teu produto: ");
 	fflush(stdin);
-	scanf("%i", &produto.Quantidade);
+	scanf(" %i", &produto.Quantidade);
+	getchar();
 	
 	return produto;
 }
@@ -105,8 +110,8 @@ void ExcluiProdutos(){
 	
 }
 
-void PesquisaProdutos(){
-	int escolha = 0;
+void PesquisaProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
+	int escolha = 0 , i = 0;
 	
 	do{
 		printf("Você quer pesquisar o produto pelo: \n1)Id\n2)Nome\n3)Sair\nEscolha: ");
@@ -114,9 +119,29 @@ void PesquisaProdutos(){
 		scanf("%i", &escolha);
 	
 		if(escolha == 1){
+		    int id = -2;
+		    
+			printf("Insira o Id do produto que voce deseja procurar: ");
+			fflush(stdin);
+			scanf("%i", &id);
 			
+			for(i = 0; i < QuantidadeProdutosMaximo; i++){
+			    if(produtos[i].Id == id){
+			        MostraProduto(produtos[i]);
+			    }
+			}
 		}else if(escolha == 2){
+		    char nome[50];
+			printf("Insira o nome do produto que voce deseja procurar: ");
+			fflush(stdin);
+	        fgets( nome, 50, stdin);
+	        getchar();
 			
+			for(i = 0; i < QuantidadeProdutosMaximo; i++){
+			    if(produtos[i].Nome == nome){
+			        MostraProduto(produtos[i]);
+			    }
+			}
 		}else if(escolha == 3)
 			break;
 		else
@@ -125,10 +150,22 @@ void PesquisaProdutos(){
 	}while(escolha != 3);
 }
 
-void ListaProdutos(){
+void ListaProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
 	int i;
 	
 	for(i = 0; i < QuantidadeProdutosMaximo; i++){
-		if()
+		if(produtos[i].Nome != ""){
+		    MostraProduto(produtos[i]);
+		}
+		printf("\n");
 	}
+}
+
+void MostraProduto(struct Produto produtos){
+    printf("----------Produto ----------");
+    printf("\nNome: %s", produtos.Nome);
+    printf("\nDescrição: %s", produtos.Descricao);
+    printf("\nPreço: %f", produtos.Preco);
+    printf("\nData de Validade: %s", produtos.Data);
+    printf("\nQuantidade: %i", produtos.Quantidade);
 }
