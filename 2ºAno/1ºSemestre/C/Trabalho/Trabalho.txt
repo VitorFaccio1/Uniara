@@ -16,13 +16,14 @@ void Menu();
 struct Produto InsereProdutos(int contador);
 void AlteraProdutos(struct Produto produtos[QuantidadeProdutosMaximo]);
 void AlteraProduto(struct Produto produto, struct Produto produtos[QuantidadeProdutosMaximo]);
-void ExcluiProdutos(struct Produto produtos[QuantidadeProdutosMaximo]);
+int ExcluiProdutos(struct Produto produtos[QuantidadeProdutosMaximo]);
 void ListaProdutos();
 struct Produto PesquisaProdutos(struct Produto produtos[QuantidadeProdutosMaximo], int exclusaoOuAlteracao);
 void MostraProduto(struct Produto produtos);
 void LimpaTela();
 struct Produto BuscarProdutoPorId(struct Produto produtos[QuantidadeProdutosMaximo]);
 struct Produto BuscarProdutoPorNome(struct Produto produtos[QuantidadeProdutosMaximo]);
+int PegaPosicaoUltimoProduto(struct Produto produtos[QuantidadeProdutosMaximo]);
 
 int main(int argc, char *argv[]) {
     setlocale(LC_ALL,"Portuguese");
@@ -32,9 +33,9 @@ int main(int argc, char *argv[]) {
 }
 
 void Menu(){
-	int resposta;
+	int resposta, foiExcluido = 0;
+	static int contador = 0;
 	struct Produto produtos[QuantidadeProdutosMaximo];
-	int contador = 0;
 	
 	do{
 		printf("O que você deseja fazer??\n1)Inserir Produtos\n2)Alterar Produtos\n3)Excluir produtos\n4)Pesquisar produtos\n5)Listar todos os produtos do estoque e de um departamento\n6)Sair\nEscolha: ");
@@ -45,7 +46,11 @@ void Menu(){
 			case 1:
 				if(contador < QuantidadeProdutosMaximo){
 					printf("\n-------Inserir um produto-------\n\n");
-					produtos[contador] = InsereProdutos(contador);
+					if(contador == 0)
+						produtos[contador] = InsereProdutos(contador);	
+					else
+						produtos[PegaPosicaoUltimoProduto(produtos)] = InsereProdutos(PegaPosicaoUltimoProduto(produtos));
+					
 					contador++;	
 				}else
 					printf("\nQuantidade Máxima de produtos cadastrados!!\n\n");
@@ -66,8 +71,12 @@ void Menu(){
 			case 3:
 				if(contador > 0){
 					printf("\n-------Excluir um produto-------\n\n");
-					ExcluiProdutos(produtos);
-					contador--;
+					
+					foiExcluido = ExcluiProdutos(produtos);
+					
+					if(foiExcluido == 1){
+						contador--;
+					}
 				}
 				else
 					printf("\nVoce não tem produtos cadastrados!!\n\n");
@@ -215,7 +224,7 @@ void AlteraProduto(struct Produto produto, struct Produto produtos[QuantidadePro
 	printf("\n\nProduto Alterado com sucesso!!!\n\n");
 }
 
-void ExcluiProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
+int ExcluiProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
 	struct Produto produto = PesquisaProdutos(produtos, 1);
 	if(produto.Nome[0] >= 'a' && produto.Nome[0] <= 'z' || produto.Nome[0] >= 'A' && produto.Nome[0] <= 'Z'){
 		struct Produto aux;
@@ -231,10 +240,15 @@ void ExcluiProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
 		for(i = 0; i < QuantidadeProdutosMaximo; i++){
 			aux = produtos[posicao];
 			produtos[posicao] = produtos[posicao + 1];
+			produtos[posicao].Id = aux.Id;
 			produtos[posicao + 1] = aux;
 			posicao++;
 		}
+		
+		return 1;
 	}
+	
+	return 0;
 }
 
 struct Produto PesquisaProdutos(struct Produto produtos[QuantidadeProdutosMaximo], int exclusaoOuAlteracao){
@@ -351,4 +365,14 @@ struct Produto BuscarProdutoPorNome(struct Produto produtos[QuantidadeProdutosMa
 			}
 		}
 	}
+}
+
+int PegaPosicaoUltimoProduto(struct Produto produtos[QuantidadeProdutosMaximo]){
+	int i, posicaoUltimoProduto = 0;
+	
+	for(i = 0; i < QuantidadeProdutosMaximo; i++)
+		if(produtos[i].Nome[0] >= 'a' && produtos[i].Nome[0] <= 'z' || produtos[i].Nome[0] >= 'A' && produtos[i].Nome[0] <= 'Z')
+		    posicaoUltimoProduto = produtos[i].Id;
+		
+	return posicaoUltimoProduto + 1;
 }
