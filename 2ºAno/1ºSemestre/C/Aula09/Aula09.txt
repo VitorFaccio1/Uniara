@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+int main(int argc, char *argv[]) {
+	
+	FILE *pont_arq;
+	
+	pont_arq = fopen("arquivo.txt", "w");
+	
+	if(pont_arq == NULL){
+		printf("\nErro na abertura do arquivo ou o arquivo nao existe! Criando novo arquivo");
+		
+		pont_arq = fopen("arquivo.txt", "w");
+	}else{
+		char palavra[20];
+		int resposta;
+		
+		do{
+			printf("Escreva uma palavra para testar gravacao de arquivo: ");
+			fflush(stdin);
+	  		fgets(palavra, 21, stdin);
+	  		fprintf(pont_arq, "%s\n", palavra);
+	  		
+	  		printf("\n\nEscrito com sucesso!!\nDeseja escrever mais alguma coisa? 1- Sim ou 0 - Nao ");
+	  		fflush(stdin);
+	  		scanf("%i", &resposta);
+  		}while(resposta != 0);
+	}
+	
+	fclose(pont_arq);
+	
+  
+ 	system("pause");
+	
+	return 0;
+}
