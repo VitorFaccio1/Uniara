@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#define QuantidadeProdutosMaximo 2
+#define QuantidadeProdutosMaximo 3
 
 struct Produto{
   int Id;
@@ -14,12 +14,15 @@ struct Produto{
 
 void Menu();
 struct Produto InsereProdutos(int contador);
-void AlteraProdutos();
-void ExcluiProdutos();
+void AlteraProdutos(struct Produto produtos[QuantidadeProdutosMaximo]);
+void AlteraProduto(struct Produto produto, struct Produto produtos[QuantidadeProdutosMaximo]);
+void ExcluiProdutos(struct Produto produtos[QuantidadeProdutosMaximo]);
 void ListaProdutos();
-void PesquisaProdutos();
+struct Produto PesquisaProdutos(struct Produto produtos[QuantidadeProdutosMaximo], int exclusaoOuAlteracao);
 void MostraProduto(struct Produto produtos);
 void LimpaTela();
+struct Produto BuscarProdutoPorId(struct Produto produtos[QuantidadeProdutosMaximo]);
+struct Produto BuscarProdutoPorNome(struct Produto produtos[QuantidadeProdutosMaximo]);
 
 int main(int argc, char *argv[]) {
     setlocale(LC_ALL,"Portuguese");
@@ -49,15 +52,21 @@ void Menu(){
 					
 				LimpaTela();
 				break;
+				
 			case 2: 
-				printf("\n-------Alterar um produto-------\n\n");
-				AlteraProdutos(produtos[QuantidadeProdutosMaximo]);
+				if(contador > 0){
+					printf("\n-------Alterar um produto-------\n\n");
+					AlteraProdutos(produtos);
+				}else
+					printf("\nVoce não tem produtos cadastrados!!\n\n");
+					
 				LimpaTela();
 				break;
+				
 			case 3:
 				if(contador > 0){
 					printf("\n-------Excluir um produto-------\n\n");
-					ExcluiProdutos(produtos[QuantidadeProdutosMaximo]);
+					ExcluiProdutos(produtos);
 					contador--;
 				}
 				else
@@ -65,21 +74,33 @@ void Menu(){
 					
 				LimpaTela();
 				break;
+				
 			case 4: 
-				printf("\n-------Pesquisar um produto-------\n\n");
-				PesquisaProdutos(produtos);
+				if(contador > 0){
+					printf("\n-------Pesquisar um produto-------\n\n");
+					PesquisaProdutos(produtos, 0);
+				}else
+					printf("\nVoce não tem produtos cadastrados!!\n\n");
 				LimpaTela();
 				break;
+				
 			case 5: 
-				printf("\n-------Lista de produtos-------\n");
-				ListaProdutos(produtos);
+				if(contador > 0){
+					printf("\n-------Lista de produtos-------\n");
+					ListaProdutos(produtos);
+				}else
+					printf("\nVoce não tem produtos cadastrados!!\n\n");
+					
 				LimpaTela();
 				break;
+				
 			case 6: 
 				printf("\nSaindo....\n");
 				break;
+				
 			default:
-				printf("\nInsira uma opcao correta!\n");
+				printf("\nInsira uma opcao correta!\n\n");
+				LimpaTela();
 				break;
 		}
 	}while(resposta != 6);
@@ -88,9 +109,15 @@ void Menu(){
 struct Produto InsereProdutos(int contador){
 	struct Produto produto;
 	
-	printf("Qual o nome do teu produto: ");
-	fflush(stdin);
-	fgets(produto.Nome, 50, stdin);
+	do{
+		printf("Qual o nome do teu produto: ");
+		fflush(stdin);
+		fgets(produto.Nome, 50, stdin);	
+		
+		if(produto.Nome[0] <= 'a' && produto.Nome[0] <= 'z' && produto.Nome[0] < 'A' && produto.Nome[0] <= 'Z')
+			printf("\nInsira um nome que comece com uma letra!!!\n");
+			
+	}while(produto.Nome[0] <= 'a' && produto.Nome[0] <= 'z' && produto.Nome[0] < 'A' && produto.Nome[0] <= 'Z');
 	
 	printf("Qual a descrição do teu produto: ");
 	fflush(stdin);
@@ -113,54 +140,136 @@ struct Produto InsereProdutos(int contador){
 	return produto;
 }
 
-void AlteraProdutos(){
+void AlteraProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
+	struct Produto produto = PesquisaProdutos(produtos, 1);
+	int escolha, i;
 	
+	if(produto.Nome[0] >= 'a' && produto.Nome[0] <= 'z' || produto.Nome[0] >= 'A' && produto.Nome[0] <= 'Z'){
+		printf("\n\nO que você deseja alterar?\n1- Nome\n2- Descrição\n3- Preço\n4- Data de validade\n5- Quantidade\n6- Sair\nEscolha: ");
+		fflush(stdin);
+		scanf("%i", &escolha);
+		
+		switch(escolha){
+			case 1:
+				printf("Qual novo nome deseja colocar: ");
+				fflush(stdin);
+				fgets(produto.Nome, 50, stdin);
+				
+				AlteraProduto(produto, produtos);
+				
+				break;
+				
+			case 2:
+				printf("Qual nova descrição deseja colocar: ");
+				fflush(stdin);
+				fgets(produto.Descricao, 50, stdin);
+				
+				AlteraProduto(produto, produtos);
+				
+				break;
+				
+			case 3:
+				printf("Qual novo Preço deseja colocar: ");
+				fflush(stdin);
+				scanf("%f", &produto.Preco);
+				
+				AlteraProduto(produto, produtos);
+				
+				break;
+				
+			case 4:
+				printf("Qual nova data deseja colocar: ");
+				fflush(stdin);
+				fgets(produto.Data, 11, stdin);
+				
+				AlteraProduto(produto, produtos);
+				
+				break;
+				
+			case 5: 
+				printf("Qual nova quantidade deseja colocar: ");
+				fflush(stdin);
+				scanf("%i", &produto.Quantidade);
+				
+				AlteraProduto(produto, produtos);
+				
+				break;
+			
+			case 6:
+				break;
+				
+			default: 
+				printf("\nInsira um opção valida!!");
+			}
+	}
 }
 
-void ExcluiProdutos(){
+void AlteraProduto(struct Produto produto, struct Produto produtos[QuantidadeProdutosMaximo]){
+	int i;
 	
+	for(i = 0; i < QuantidadeProdutosMaximo; i++)
+				if(produtos[i].Id == produto.Id)
+					if(produtos[i].Nome[0] >= 'a' && produtos[i].Nome[0] <= 'z' || produtos[i].Nome[0] >= 'A' && produtos[i].Nome[0] <= 'Z')
+						produtos[i] = produto;
+						
+	printf("\n\nProduto Alterado com sucesso!!!\n\n");
 }
 
-void PesquisaProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
+void ExcluiProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
+	struct Produto produto = PesquisaProdutos(produtos, 1);
+	if(produto.Nome[0] >= 'a' && produto.Nome[0] <= 'z' || produto.Nome[0] >= 'A' && produto.Nome[0] <= 'Z'){
+		struct Produto aux;
+		
+		int i, posicao;
+		
+		for (i = 0; i < QuantidadeProdutosMaximo; i++){
+			if(produtos[i].Id == produto.Id)
+				if(produtos[i].Nome[0] >= 'a' && produtos[i].Nome[0] <= 'z' || produtos[i].Nome[0] >= 'A' && produtos[i].Nome[0] <= 'Z')
+					posicao = i;
+		}
+					
+		for(i = 0; i < QuantidadeProdutosMaximo; i++){
+			aux = produtos[posicao];
+			produtos[posicao] = produtos[posicao + 1];
+			produtos[posicao + 1] = aux;
+			posicao++;
+		}
+	}
+}
+
+struct Produto PesquisaProdutos(struct Produto produtos[QuantidadeProdutosMaximo], int exclusaoOuAlteracao){
 	int escolha = 0 , i = 0;
 	
 	do{
 		printf("Você quer pesquisar o produto pelo: \n1)Id\n2)Nome\n3)Sair\nEscolha: ");
 		fflush(stdin);
 		scanf("%i", &escolha);
-	
-		if(escolha == 1){
-		    int id = -2;
+		
+		switch(escolha){
+			case 1: 
+				if(exclusaoOuAlteracao == 0)
+					BuscarProdutoPorId(produtos);				
+				else
+					return BuscarProdutoPorId(produtos);
+				
+		    	LimpaTela();	
+		    	break;
 		    
-			printf("Insira o Id do produto que voce deseja procurar: ");
-			fflush(stdin);
-			scanf("%i", &id);
+		    case 2: 
+		    	if(exclusaoOuAlteracao == 0)
+					BuscarProdutoPorNome(produtos);				
+				else
+					return BuscarProdutoPorNome(produtos);				
+					
+			    LimpaTela();
+			    break;
+			    
+			case 3: 
+				break;
 			
-			for(i = 0; i < QuantidadeProdutosMaximo; i++){
-			    if(produtos[i].Id == id && produtos[i].Nome[0] >= 'a' && produtos[i].Nome[0] <= 'z' || produtos[i].Nome[0] >= 'A' && produtos[i].Nome[0] <= 'Z'){
-			        MostraProduto(produtos[i]);
-			    }
-			    printf("\n");
-			}
-			
-		}else if(escolha == 2){
-		    char nome[50];
-			printf("Insira o nome do produto que voce deseja procurar: ");
-			fflush(stdin);
-	        fgets(nome, 50, stdin);
-			
-			for(i = 0; i < QuantidadeProdutosMaximo; i++){
-			    if(strstr(produtos[i].Nome, nome) != NULL){
-			        MostraProduto(produtos[i]);
-			    }
-			    printf("\n");
-			}
-			
-		}else if(escolha == 3)
-			break;
-		else
-			printf("\nInsira um opcao valida!!");
-			
+			default: 
+				printf("\nInsira um opção valida!!");
+		}		
 	}while(escolha != 3);
 }
 
@@ -177,6 +286,7 @@ void ListaProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
 
 void MostraProduto(struct Produto produtos){
     printf("\n----------Produto ----------");
+    printf("\nId: %i", produtos.Id);
     printf("\nNome: %s", produtos.Nome);
     printf("Descrição: %s", produtos.Descricao);
     printf("Preço: %f", produtos.Preco);
@@ -189,4 +299,56 @@ void LimpaTela(){
 	fflush(stdin);
 	getchar();
 	system("cls");
+}
+
+struct Produto BuscarProdutoPorId(struct Produto produtos[QuantidadeProdutosMaximo]){
+	int id = -2, resposta = 0, i = 0;
+		    
+	printf("Insira o Id do produto que voce deseja procurar: ");
+	fflush(stdin);
+	scanf("%i", &id);
+	
+	for(i = 0; i < QuantidadeProdutosMaximo + 1; i++){
+		if(i == QuantidadeProdutosMaximo){
+			printf("\nAcabou os produtos!!\n\n");
+		}else{
+			if(produtos[i].Id == id){
+				if(produtos[i].Nome[0] >= 'a' && produtos[i].Nome[0] <= 'z' || produtos[i].Nome[0] >= 'A' && produtos[i].Nome[0] <= 'Z'){
+					MostraProduto(produtos[i]);
+			        printf("\nEsse produto que você queria encontrar? 1 - Sim 2 - Não: ");
+			        fflush(stdin);
+			        scanf("%i", &resposta);
+			        
+			        if(resposta == 1)
+			        	return produtos[i];	
+				}
+		        
+		    }		
+		}
+	}
+}
+
+struct Produto BuscarProdutoPorNome(struct Produto produtos[QuantidadeProdutosMaximo]){
+	int i, resposta = 0;
+	char nome[50];
+	printf("Insira o nome do produto que voce deseja procurar: ");
+	fflush(stdin);
+    fgets(nome, 50, stdin);
+	
+	for(i = 0; i < QuantidadeProdutosMaximo +  1; i++){
+		if(i == QuantidadeProdutosMaximo){
+			printf("\nAcabou os produtos!!\n\n");
+		}else{
+			if(strstr(produtos[i].Nome, nome) != NULL){
+		        MostraProduto(produtos[i]);
+		        printf("\nEsse produto que você queria encontrar? 1 - Sim 2 - Não: ");
+		        fflush(stdin);
+		        scanf("%i", &resposta);
+		        
+		        if(resposta == 1)
+		        	return produtos[i];
+		    	
+			}
+		}
+	}
 }
