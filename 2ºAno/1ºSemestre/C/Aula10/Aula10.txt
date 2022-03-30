@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define QuantidadeMaterias 5
+#include <locale.h>
+
+int main() {
+	setlocale(LC_ALL,"Portuguese");
+	
+	struct Aluno{
+		char Nome[50];
+		char Email[50];
+	};
+	
+	struct Materias{
+		char MateriaNome[50];
+		float Nota;
+	};
+	
+	struct Materias materias[QuantidadeMaterias];
+	struct Aluno aluno;
+	
+	int i; 
+	
+	printf("Insira o nome de um aluno: ");
+	fflush(stdin);
+	fgets(aluno.Nome, 50, stdin);
+	
+	printf("Insira o email do %s Email: ", aluno.Nome);
+	fflush(stdin);
+	fgets(aluno.Email, 50, stdin);
+	
+	for(i = 0; i < QuantidadeMaterias; i++){
+		
+		printf("Insira o nome da %iº materia: ", i + 1);
+		fflush(stdin);
+		fgets(materias[i].MateriaNome, 50, stdin);
+		
+		printf("Insira a %iº nota de %s: ", i + 1, materias[i].MateriaNome);
+		fflush(stdin);
+		scanf("%f", &materias[i].Nota);
+	}
+	
+	printf("Nome: %s", aluno.Nome);
+	printf("\nEmail: %s", aluno.Email);
+	printf("\n----NOTAS---\n");
+	
+	for(i = 0; i < QuantidadeMaterias; i++){
+		printf("Materia %i: %s",i+1, materias[i].MateriaNome);
+		printf("Nota: %f\n\n", materias[i].Nota);
+	}
+
+	return 0;
+}
