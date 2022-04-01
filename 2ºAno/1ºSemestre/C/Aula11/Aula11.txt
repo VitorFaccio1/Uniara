@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define QuantidadeMaximaAluno 3
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+struct Aluno{
+		int Id;
+		char Nome[30];
+		float Salario;
+		char Ra[10];
+	};
+
+struct Aluno InsereAluno(int contador);
+void MostraAluno(struct Aluno aluno);
+
+int main() {
+	struct Aluno alunos[QuantidadeMaximaAluno];
+	int contadorAluno = 0;
+	
+	if(contadorAluno >= QuantidadeMaximaAluno)
+		printf("Quantidade maxima de alunos inseridas");
+	else{
+		do{
+			alunos[contadorAluno] = InsereAluno(contadorAluno);
+			contadorAluno++;
+		}while(contadorAluno < QuantidadeMaximaAluno);
+		
+		int i = 0;
+		
+		for(i = 0; i < contadorAluno; i++)
+			MostraAluno(alunos[i]);
+		
+		FILE *arquivo;
+		
+		arquivo = fopen("aluno.txt", "a");
+		
+		for(i = 0; i < contadorAluno; i++)
+			fprintf(arquivo, "%sId: %i\nNome: %sRa: %sSalario: %.2f", 
+			i == 0 ? "------ALUNO----\n" : "\n\n------ALUNO----\n",
+			alunos[i].Id,
+			alunos[i].Nome,
+			alunos[i].Ra,
+			alunos[i].Salario);
+		
+		
+		printf("\nSalvando arquivo!!\n");
+		fclose(arquivo);
+	}	
+	return 0;
+}
+
+void MostraAluno(struct Aluno aluno){
+	printf("\n\n---------ALUNO---------\nId: %i\nNome: %sSalario: %f\nRa: %s ", aluno.Id, aluno.Nome, aluno.Salario, aluno.Ra);
+}
+
+struct Aluno InsereAluno(int contador){
+	struct Aluno aluno;
+	
+	printf("Digite o nome do aluno: ");
+	fflush(stdin);
+	fgets(aluno.Nome, 31, stdin);
+	
+	printf("Digite o Salario do aluno: ");
+	fflush(stdin);
+	scanf("%f", &aluno.Salario);
+	
+	printf("Qual e o RA do aluno: ");
+	fflush(stdin);
+	fgets(aluno.Ra, 11, stdin);
+	
+	aluno.Id = contador;
+	
+	return aluno;
+}
