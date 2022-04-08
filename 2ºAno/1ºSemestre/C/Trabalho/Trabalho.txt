@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#define QuantidadeProdutosMaximo 3
+#define QuantidadeProdutosMaximo 15
 
 struct Produto{
   int Id;
@@ -160,9 +160,15 @@ void AlteraProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
 		
 		switch(escolha){
 			case 1:
-				printf("Qual novo nome deseja colocar: ");
-				fflush(stdin);
-				fgets(produto.Nome, 50, stdin);
+				do{
+					printf("Qual novo nome deseja colocar: ");
+					fflush(stdin);
+					fgets(produto.Nome, 50, stdin);
+					
+					if(produto.Nome[0] <= 'a' && produto.Nome[0] <= 'z' && produto.Nome[0] < 'A' && produto.Nome[0] <= 'Z')
+						printf("\nInsira um nome que comece com uma letra!!!\n");
+					
+				}while(produto.Nome[0] <= 'a' && produto.Nome[0] <= 'z' && produto.Nome[0] < 'A' && produto.Nome[0] <= 'Z');
 				
 				AlteraProduto(produto, produtos);
 				
@@ -293,8 +299,8 @@ void ListaProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
 	for(i = 0; i < QuantidadeProdutosMaximo; i++){
 		if(produtos[i].Nome[0] >= 'a' && produtos[i].Nome[0] <= 'z' || produtos[i].Nome[0] >= 'A' && produtos[i].Nome[0] <= 'Z'){
 		    MostraProduto(produtos[i]);
+		    printf("\n");
 		}
-		printf("\n");
 	}
 }
 
