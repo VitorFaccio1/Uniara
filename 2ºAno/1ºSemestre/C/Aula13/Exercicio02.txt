@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	
+	int num1, num2, num3, *pont1, *pont2, *pont3;
+	
+	printf("Insira um valor para o numero 1: ");
+	fflush(stdin);
+	scanf("%i", &num1);
+	
+	printf("Insira um valor para o numero 2: ");
+	fflush(stdin);
+	scanf("%i", &num2);
+	
+	printf("Insira um valor para o numero 3: ");
+	fflush(stdin);
+	scanf("%i", &num3);
+	
+	pont1 = &num1;
+	pont2 = &num2;
+	pont3 = &num3;
+	
+	printf("\n\n---------Antes de alterar---------");
+	printf("\nNUMERO 1: %i  ENDERECO NUMERO 1: %i  VALOR PONTEIRO 1: %i     ENDERECO PONTEIRO 1: %i", num1, &num1, *pont1, &pont1);
+	printf("\nNUMERO 2: %i  ENDERECO NUMERO 2: %i  VALOR PONTEIRO 2: %i     ENDERECO PONTEIRO 2: %i", num2, &num2, *pont2, &pont2);
+	printf("\nNUMERO 3: %i  ENDERECO NUMERO 3: %i  VALOR PONTEIRO 3: %i     ENDERECO PONTEIRO 3: %i", num3, &num3,  *pont3, &pont3);
+	
+	AlteraValoresPorReferencia(pont1, pont2, pont3);
+	
+	printf("\n\n---------Depois de alterar---------");
+	printf("\nNUMERO 1: %i  ENDERECO NUMERO 1: %i  VALOR PONTEIRO 1: %i     ENDERECO PONTEIRO 1: %i", num1, &num1, *pont1, &pont1);
+	printf("\nNUMERO 2: %i  ENDERECO NUMERO 2: %i  VALOR PONTEIRO 2: %i     ENDERECO PONTEIRO 2: %i", num2, &num2, *pont2, &pont2);
+	printf("\nNUMERO 3: %i  ENDERECO NUMERO 3: %i  VALOR PONTEIRO 3: %i     ENDERECO PONTEIRO 3: %i", num3, &num3,  *pont3, &pont3);
+
+	return 0;
+}
+
+void AlteraValoresPorReferencia(int *pont1, int *pont2, int *pont3){
+	
+	int aux;
+	
+	aux = *pont1;
+	*pont1 = *pont2;
+	*pont2 = *pont3;
+	*pont3 = aux;
+}
