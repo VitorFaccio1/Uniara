@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#define QuantidadeProdutosMaximo 15
+#define QuantidadeProdutosMaximo 5
 
 struct Produto{
   int Id;
@@ -25,8 +25,9 @@ struct Produto BuscarProdutoPorId(struct Produto produtos[QuantidadeProdutosMaxi
 struct Produto BuscarProdutoPorNome(struct Produto produtos[QuantidadeProdutosMaximo]);
 int PegaPosicaoUltimoProduto(struct Produto produtos[QuantidadeProdutosMaximo]);
 
-int main(int argc, char *argv[]) {
+int main() {	
     setlocale(LC_ALL,"Portuguese");
+    
 	Menu();
 	
 	return 0;
@@ -38,7 +39,7 @@ void Menu(){
 	struct Produto produtos[QuantidadeProdutosMaximo];
 	
 	do{
-		printf("O que você deseja fazer??\n1)Inserir Produtos\n2)Alterar Produtos\n3)Excluir produtos\n4)Pesquisar produtos\n5)Listar todos os produtos do estoque e de um departamento\n6)Sair\nEscolha: ");
+		printf("O que você deseja fazer??\n1)Inserir Produtos\n2)Alterar Produtos\n3)Excluir produtos\n4)Pesquisar produtos\n5)Listar todos os produtos do estoque e de um departamento\n6)Salvar no arquivo\n7)Ler arquivo\n8)Sair\nEscolha: ");
 		fflush(stdin);
 		scanf("%i", &resposta);
 		
@@ -103,7 +104,17 @@ void Menu(){
 				LimpaTela();
 				break;
 				
-			case 6: 
+			case 6:
+				printf("Salvando no arquivo");
+				SalvaArquivo(produtos, contador);
+				break;	
+								
+			case 7:
+				printf("Salvando no arquivo");
+				LerArquivo(produtos);
+				break;	
+				
+			case 8: 
 				printf("\nSaindo....\n");
 				break;
 				
@@ -112,7 +123,7 @@ void Menu(){
 				LimpaTela();
 				break;
 		}
-	}while(resposta != 6);
+	}while(resposta != 8);
 }
 
 struct Produto InsereProdutos(int contador){
@@ -381,4 +392,53 @@ int PegaPosicaoUltimoProduto(struct Produto produtos[QuantidadeProdutosMaximo]){
 		    posicaoUltimoProduto = produtos[i].Id;
 		
 	return posicaoUltimoProduto + 1;
+}
+
+void SalvaArquivo(struct Produto produtos[QuantidadeProdutosMaximo], int contador){
+	FILE *arq; 
+	
+	char c;
+		
+  	arq = fopen("Produtos.txt", "w");
+  
+	if(arq == NULL)
+	{
+		printf("\nErro na abertura do arquivo!\n");
+	}
+	else{
+		int i;
+		fprintf(arq, "%i\n", contador);
+		for(i = 0; i < contador; i++){	
+			fprintf(arq, "%i\n", produtos[i].Id);
+			fprintf(arq, "%s", produtos[i].Nome);
+			fprintf(arq, "%s", produtos[i].Descricao);
+			fprintf(arq, "%.2f\n", produtos[i].Preco);
+			fprintf(arq, "%s", produtos[i].Data);
+			fprintf(arq, "%i\n", produtos[i].Quantidade);
+		}
+		
+		fclose(arq);
+		printf("Salvado no arquivo com sucesso!");
+		
+	}
+}
+
+void LerArquivo(struct Produto produtos[QuantidadeProdutosMaximo]){
+	FILE *arq; 
+		
+	struct Produto produto;
+	
+  	arq = fopen("Produtos.txt", "w");
+  
+	if(arq == NULL)
+	{
+		printf("\nErro na abertura do arquivo!\n");
+	}
+	else{
+		
+		printf("\nArquivo lido com sucesso!!!!\n");
+	
+	}
+	
+	fclose(arq);
 }
