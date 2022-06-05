@@ -105,13 +105,13 @@ void Menu(){
 				break;
 				
 			case 6:
-				printf("Salvando no arquivo");
 				SalvaArquivo(produtos, contador);
+				LimpaTela();
 				break;	
 								
 			case 7:
-				printf("Salvando no arquivo");
-				LerArquivo(produtos);
+				contador = LerArquivo(produtos);
+				LimpaTela();
 				break;	
 				
 			case 8: 
@@ -217,8 +217,7 @@ void AlteraProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
 				fflush(stdin);
 				scanf("%i", &produto.Quantidade);
 				
-				AlteraProduto(produto, produtos);
-				
+				AlteraProduto(produto, produtos);	
 				break;
 			
 			case 6:
@@ -318,8 +317,8 @@ void ListaProdutos(struct Produto produtos[QuantidadeProdutosMaximo]){
 void MostraProduto(struct Produto produtos){
     printf("\n----------Produto ----------");
     printf("\nId: %i", produtos.Id);
-    printf("\nNome: %s", produtos.Nome);
-    printf("Descrição: %s", produtos.Descricao);
+    printf("\nNome: %s\n", produtos.Nome);
+    printf("Descrição: %s\n", produtos.Descricao);
     printf("Preço: %f", produtos.Preco);
     printf("\nData de Validade: %s\n", produtos.Data);
     printf("Quantidade: %i", produtos.Quantidade);
@@ -412,33 +411,48 @@ void SalvaArquivo(struct Produto produtos[QuantidadeProdutosMaximo], int contado
 			fprintf(arq, "%i\n", produtos[i].Id);
 			fprintf(arq, "%s", produtos[i].Nome);
 			fprintf(arq, "%s", produtos[i].Descricao);
-			fprintf(arq, "%.2f\n", produtos[i].Preco);
-			fprintf(arq, "%s", produtos[i].Data);
+			fprintf(arq, "%f\n", produtos[i].Preco);
+			fprintf(arq, "%s\n", produtos[i].Data);
 			fprintf(arq, "%i\n", produtos[i].Quantidade);
 		}
 		
 		fclose(arq);
-		printf("Salvado no arquivo com sucesso!");
+		printf("\nSalvado no arquivo com sucesso!");
 		
 	}
 }
 
-void LerArquivo(struct Produto produtos[QuantidadeProdutosMaximo]){
+int LerArquivo(struct Produto produtos[QuantidadeProdutosMaximo]){
+	int qtdProdutos = 0;
 	FILE *arq; 
-		
-	struct Produto produto;
 	
-  	arq = fopen("Produtos.txt", "w");
+  	arq = fopen("Produtos.txt", "r");
   
 	if(arq == NULL)
 	{
 		printf("\nErro na abertura do arquivo!\n");
 	}
 	else{
+		int i;
+		struct Produto produto;
+		
+		fscanf(arq, "%d", &qtdProdutos);	
+					
+		for(i = 0; i < qtdProdutos; i++){
+			fscanf(arq, "%d", &produto.Id);
+			fscanf(arq, "%s", &produto.Nome);
+			fscanf(arq, "%s", &produto.Descricao);
+			fscanf(arq, "%f", &produto.Preco);
+			fscanf(arq, "%s", &produto.Data);
+			fscanf(arq, "%d", &produto.Quantidade);	
+			
+		 	produtos[i] = produto;		
+		}
 		
 		printf("\nArquivo lido com sucesso!!!!\n");
-	
+		
+		fclose(arq);
 	}
 	
-	fclose(arq);
+	return qtdProdutos;
 }
