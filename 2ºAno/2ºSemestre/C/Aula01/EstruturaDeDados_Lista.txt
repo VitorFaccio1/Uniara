@@ -24,6 +24,13 @@ Lista * InserirNaLista(Lista * pLista, int info){
 	
 }
 
+void ImprimirLista(Lista * pLista){
+	while(pLista != NULL){
+		printf("[%d]->", pLista->info);
+		pLista = pLista->next;
+	}
+}
+
 int main() {
 	
 	Lista * lst;
@@ -33,6 +40,8 @@ int main() {
 	lst = InserirNaLista(lst, 1000);
 	lst = InserirNaLista(lst, 1001);
 	lst = InserirNaLista(lst, 1002);
+	
+	ImprimirLista(lst);
 	
 	return 0;
 }
