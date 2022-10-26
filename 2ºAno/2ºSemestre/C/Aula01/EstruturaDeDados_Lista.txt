@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct lista {
+	int info;
+	struct lista * next;
+};
+
+typedef struct lista Lista;
+
+Lista * InicializaLista(){
+	return NULL;
+}
+
+//Insere valores no começo da lista
+Lista * InserirNaLista(Lista * pLista, int info){
+	Lista * novo = (Lista *)malloc(sizeof(Lista));
+	
+	if(novo != NULL){
+		novo->info = info;
+		novo->next = pLista;
+		return novo;
+	}
+	
+}
+
+int main() {
+	
+	Lista * lst;
+	
+	lst = InicializaLista();
+	
+	lst = InserirNaLista(lst, 1000);
+	lst = InserirNaLista(lst, 1001);
+	lst = InserirNaLista(lst, 1002);
+	
+	return 0;
+}
