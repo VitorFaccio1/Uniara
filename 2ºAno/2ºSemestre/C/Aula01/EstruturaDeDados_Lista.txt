@@ -12,7 +12,6 @@ Lista * InicializaLista(){
 	return NULL;
 }
 
-//Insere valores no começo da lista
 Lista * InserirNaLista(Lista * pLista, int info){
 	Lista * novo = (Lista *)malloc(sizeof(Lista));
 	
@@ -31,17 +30,98 @@ void ImprimirLista(Lista * pLista){
 	}
 }
 
-int main() {
+Lista * PesquisaNaLista(Lista * pLista, int valor){
+	while(pLista != NULL){
+		if(pLista->info == valor)
+			return pLista;
+			
+		pLista = pLista->next;
+	}
 	
+	return NULL;
+}
+
+Lista * RemoverValor(Lista * pLista, int valor){
+	Lista * anterior = NULL;
+	Lista * aux = pLista;
+	
+	while(pLista != NULL && pLista->info != valor){
+		anterior = pLista;	
+		pLista = pLista->next;
+	}
+	
+	if(anterior == NULL)
+		aux = aux->next;
+	else{
+		if(anterior->next == NULL)
+			return aux;
+		else
+			anterior->next = pLista->next;
+	}
+		
+	free(aux);
+	return aux;
+}
+
+int main() {
+	int escolha;
 	Lista * lst;
 	
 	lst = InicializaLista();
 	
-	lst = InserirNaLista(lst, 1000);
-	lst = InserirNaLista(lst, 1001);
-	lst = InserirNaLista(lst, 1002);
+	do{
+		printf("\nInsira o que deseja fazer: \n1)Inserir Na Lista\n2)Mostrar Lista\n3)Pesquisar na lista\n4)Remover valor\n5)Sair\nEscolha: ");
+		fflush(stdin);
+		scanf("%i", &escolha);	
 	
-	ImprimirLista(lst);
-	
+		switch(escolha){
+			case 1:{
+				int valorInserido;
+				
+				printf("Digite o valor que deseja inserir na lista: ");
+				fflush(stdin);
+				scanf("%i", &valorInserido);
+				
+				lst = InserirNaLista(lst, valorInserido);
+				
+				break;
+			}
+			case 2:{
+				ImprimirLista(lst);
+				break;
+			}
+			case 3:{
+				int valorPesquisa;
+				
+				printf("Digite o valor que deseja buscar na lista: ");
+				fflush(stdin);
+				scanf("%i", &valorPesquisa);
+				
+				Lista * valorEncontrado = PesquisaNaLista(lst, valorPesquisa);
+			
+				if(valorEncontrado == NULL)
+					printf("\nA lista esta vazia ou nao encontrou nenhum valor igual ao digitado\n");
+				else
+					printf("[%d] Encontrado no endereco %p\n", valorEncontrado->info, valorEncontrado);
+				
+				break;
+			}
+			case 4: {
+				int valorRemocao;
+				
+				printf("Digite o valor que deseja buscar na lista: ");
+				fflush(stdin);
+				scanf("%i", &valorRemocao);
+				
+				lst = RemoverValor(lst, valorRemocao);
+				break;
+			}
+			case 5: {
+				printf("\nSaindo...");
+				break;
+			}
+		}
+	}while(escolha != 5);
+		
 	return 0;
 }
