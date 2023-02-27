@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+typedef struct no(){
+	int dado;
+	struct *prox;
+}tno;
+
+typedef tno *tpilha;
+
+void CriarPilha(tpilha * pp){
+	*pp = NULL;
+}
+
+bool push(tpilha * pp, int dado){
+	tpilha novo = (tno *)malloc(sizeof(tno))
+	novo->dado = dado;
+	novo->prox = *pp;
+	*pp = novo;
+	
+	return true;
+}
+
+bool pop(tpilha * pp){
+	 
+}
+
+int main(int argc, char *argv[]) {
+	
+	tpilha p;
+	int escolha;
+	
+	criarPilha(&p);
+	
+	do{
+		printf("Insira o que deseja fazer: \n1)Criar pilha\n2)Inserir na pilha\n3)Retirar da pilha\n4)Sair");
+		fflush(stdin);
+		scanf("%i", &escolha);
+		
+		switch(escolha){
+			case 1: 
+				CriarPilha(&p);
+				break;
+			case 2:
+				int dado;
+				
+				printf("Qual valor deseja inserir: ");
+				fflush(stdin);
+				scanf("%i", &dado);
+				
+				if(push(&p, dado))
+					printf("Inserido na pilha");
+				else
+					printf("Erro ao inserir!!");
+					
+				break;
+			case 3: 
+				if(pop(&p))
+					printf("Removido da pilha");
+				else
+					printf("Erro ao remover!!");
+			case 4:
+				printf("Saindo!");
+				break;
+			default: 
+				printf("Insira uma opcao valida");
+				break;
+		}
+	}while(escolha != 4);
+		
+	return 0;
+}
