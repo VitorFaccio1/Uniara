@@ -1,75 +1,107 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include<stdio.h>
+#include<stdbool.h>
+#include<stdlib.h>
 
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+typedef int telemento;
 
-typedef struct no(){
-	int dado;
-	struct *prox;
+typedef struct no{
+        int dado;
+        struct no * prox;
 }tno;
 
-typedef tno *tpilha;
+typedef tno * tpilha;
 
-void CriarPilha(tpilha * pp){
-	*pp = NULL;
+void criar(tpilha * pp){
+     *pp = NULL;
 }
 
-bool push(tpilha * pp, int dado){
-	tpilha novo = (tno *)malloc(sizeof(tno))
-	novo->dado = dado;
-	novo->prox = *pp;
-	*pp = novo;
-	
-	return true;
+bool push(tpilha *pp, telemento valor){
+     tpilha novo;
+     novo = (tno*) malloc(sizeof(tno));
+     if(novo == NULL)
+       return false;
+     else{
+          novo->dado = valor;
+          novo->prox = *pp;
+          *pp = novo;
+          return true;    
+     }     
 }
 
-bool pop(tpilha * pp){
-	 
+void imprimir(tpilha *pp){
+     tpilha aux;
+     aux = *pp;
+     while(aux != NULL){
+           printf("Pilha[%d] \n", aux->dado);
+           aux = aux->prox;              
+     }     
 }
 
-int main(int argc, char *argv[]) {
-	
-	tpilha p;
-	int escolha;
-	
-	criarPilha(&p);
-	
-	do{
-		printf("Insira o que deseja fazer: \n1)Criar pilha\n2)Inserir na pilha\n3)Retirar da pilha\n4)Sair");
-		fflush(stdin);
-		scanf("%i", &escolha);
-		
-		switch(escolha){
-			case 1: 
-				CriarPilha(&p);
-				break;
-			case 2:
-				int dado;
-				
-				printf("Qual valor deseja inserir: ");
-				fflush(stdin);
-				scanf("%i", &dado);
-				
-				if(push(&p, dado))
-					printf("Inserido na pilha");
-				else
-					printf("Erro ao inserir!!");
-					
-				break;
-			case 3: 
-				if(pop(&p))
-					printf("Removido da pilha");
-				else
-					printf("Erro ao remover!!");
-			case 4:
-				printf("Saindo!");
-				break;
-			default: 
-				printf("Insira uma opcao valida");
-				break;
-		}
-	}while(escolha != 4);
-		
-	return 0;
+bool pop(tpilha *pp, telemento * valor){
+     tpilha aux;
+     if(*pp == NULL)
+        return false;
+     else{
+          aux = *pp;
+          *valor = (*pp)->dado;
+          *pp = aux->prox; //*pp = *pp->prox;
+          free(aux);
+          return true;     
+     }     
+}
+
+void main(){
+     
+     tpilha p;
+     telemento op, valor = 0, pegaValor = 0; //telemento é um novo tipo definido para inteiros
+     
+     criar(&p);
+     
+     do{
+        printf("1-Empilhar\n2-Imprimir\n3-Desempilhar\n4-Trocar pilha\n-1-Sair\nEscolha: ");
+        scanf("%d", &op);
+        switch(op){
+                   case 1: do{
+                              printf("Entre com o valor ou (-1 para sair): ");
+                              scanf("%d",&valor);
+                              if(valor==-1)
+                                printf("Saindo...\n");
+                              else{
+                                   if(push(&p, valor)){
+                                      printf("Pilha[%d] \n", p->dado);         
+                                   }     
+                                   else{
+                                        printf("Nao foi possivel alocar memoria! \n");
+                                        valor= -1;     
+                                   }
+                              }                                                                
+                           }while(valor!=-1);          
+                           break;
+                   case 2: imprimir(&p);
+                           break;
+                   case 3: do{
+                              printf("Entre com 1 para desempilhar ou (-1 para sair): ");
+                              scanf("%d",&valor);
+                              if(valor == -1){
+                                 printf("Saindo...\n");                                                
+                              }
+                              else{
+                                   if(valor == 1){
+                                      if(pop(&p, &pegaValor)){
+                                         printf("Retirado Elemento do topo da pilha: %d \n", pegaValor);        
+                                      }
+                                      else{
+                                           printf("\nPilha Vazia! \n");
+                                      }         
+                                   }   
+                                   else{
+                                        printf("Valor Invalido! \n");
+                                   }                       
+                              }                        
+                           }while(valor!=-1);   
+						   break;                
+        }               
+     }while(op!=-1);
+               
+     system("PAUSE");     
 }
