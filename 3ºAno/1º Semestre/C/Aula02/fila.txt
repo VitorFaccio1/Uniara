@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+typedef struct no{
+	int dado;
+	struct no * prox;
+}tno;
+
+typedef struct fila{
+	tno * comeco;
+	tno * fim;
+}tfila;
+
+void inicializar(tfila * ppf){
+	ppf->comeco = ppf->fim = NULL;
+}
+
+bool enfileirar(tfila * ppf, int dado){
+	tno * novo = (tno*)malloc(sizeof(tno));
+
+	if(novo == NULL)
+		return false;
+
+	if(ppf->comeco == NULL){
+		novo->dado = dado;
+		novo->prox = NULL;
+		ppf->comeco = novo;
+		ppf->fim = novo;
+
+		printf("Fila[%d]", novo->dado);
+
+		return true;
+	}
+
+	novo->dado = dado;
+	novo->prox = NULL;
+	(ppf->fim)->prox = novo;
+	ppf->fim = novo;
+
+	printf("Fila[%d]", novo->dado);
+
+	return true;
+}
+
+bool desinfileirar(tfila * ppf, int * dado){
+    tno * aux;
+
+    if(ppf->comeco == NULL)
+        return false;
+
+    aux = ppf->comeco;
+    *dado = aux->dado;
+    ppf->comeco = aux->prox;
+    free(aux);
+
+    return true;
+}
+
+int main(int argc, char *argv[]) {
+	tfila * pf;
+	int dado;
+
+	inicializar(&pf);
+
+	if(!enfileirar(&pf, 1))
+		printf("Erro ao infileirar!\n");
+
+	if(!enfileirar(&pf, 2))
+		printf("Erro ao infileirar!\n");
+
+	if(!enfileirar(&pf, 3))
+		printf("Erro ao infileirar!\n");
+
+	if(desinfileirar(&pf, &dado))
+        printf("Removido %d do comeco da fila!\n", dado);
+
+	return 0;
+}
