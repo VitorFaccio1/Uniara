@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\vitor\\Desktop\\Trabalho\\Back\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{642C5E5F-2223-4064-9F4D-810B0A17F98D}|WebApplication1\\WebApplication1.csproj|c:\\users\\vitor\\desktop\\trabalho\\back\\webapplication1\\controllers\\geminicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{642C5E5F-2223-4064-9F4D-810B0A17F98D}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\controllers\\geminicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{642C5E5F-2223-4064-9F4D-810B0A17F98D}|WebApplication1\\WebApplication1.csproj|c:\\users\\vitor\\desktop\\trabalho\\back\\webapplication1\\services\\geminiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{642C5E5F-2223-4064-9F4D-810B0A17F98D}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\services\\geminiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{642C5E5F-2223-4064-9F4D-810B0A17F98D}|WebApplication1\\WebApplication1.csproj|c:\\users\\vitor\\desktop\\trabalho\\back\\webapplication1\\interfaces\\igeminiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{642C5E5F-2223-4064-9F4D-810B0A17F98D}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\interfaces\\igeminiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IGeminiService.cs",
+              "DocumentMoniker": "C:\\Users\\vitor\\Desktop\\Trabalho\\Back\\WebApplication1\\Interfaces\\IGeminiService.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Interfaces\\IGeminiService.cs",
+              "ToolTip": "C:\\Users\\vitor\\Desktop\\Trabalho\\Back\\WebApplication1\\Interfaces\\IGeminiService.cs",
+              "RelativeToolTip": "WebApplication1\\Interfaces\\IGeminiService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T02:00:10.955Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GeminiService.cs",
+              "DocumentMoniker": "C:\\Users\\vitor\\Desktop\\Trabalho\\Back\\WebApplication1\\Services\\GeminiService.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Services\\GeminiService.cs",
+              "ToolTip": "C:\\Users\\vitor\\Desktop\\Trabalho\\Back\\WebApplication1\\Services\\GeminiService.cs",
+              "RelativeToolTip": "WebApplication1\\Services\\GeminiService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCMAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T01:51:12.733Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GeminiController.cs",
+              "DocumentMoniker": "C:\\Users\\vitor\\Desktop\\Trabalho\\Back\\WebApplication1\\Controllers\\GeminiController.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Controllers\\GeminiController.cs",
+              "ToolTip": "C:\\Users\\vitor\\Desktop\\Trabalho\\Back\\WebApplication1\\Controllers\\GeminiController.cs",
+              "RelativeToolTip": "WebApplication1\\Controllers\\GeminiController.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAcwF0AAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T01:44:11.106Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
