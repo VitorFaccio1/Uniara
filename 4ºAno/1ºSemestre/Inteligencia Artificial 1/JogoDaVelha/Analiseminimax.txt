@@ -1,0 +1,18 @@
+Primeira iteração (is_max = False, depth = 0):
+Então, o minimax começa com is_max = False, o que significa que é a vez do jogador que quer minimizar a pontuação (OPPONENT).
+Primeiro, a função verifica se o jogo já acabou, se alguém ganhou ou se não tem mais movimentos possíveis.
+Se o jogo não acabou, ela vai olhar todas as células vazias no tabuleiro e tentar colocar a peça do OPPONENT em cada uma delas.
+Para cada jogada que o OPPONENT pode fazer, a função chama a si mesma, mas agora é a vez do outro jogador (PLAYER).
+Cada vez que a função chama a si mesma, a profundidade aumenta em 1.
+No final, a função retorna o pior valor encontrado para o OPPONENT, porque ele quer minimizar a pontuação do PLAYER.
+
+Segunda iteração (is_max = True, depth = 1):
+Agora é a vez do PLAYER.
+Ela olha para todas as células vazias e tenta colocar a peça do PLAYER em cada uma.
+Para cada movimento que o PLAYER pode fazer, a função chama a si mesma novamente, mas agora é a vez do OPPONENT.
+A função vai retornar o melhor valor encontrado para o PLAYER, porque ele quer maximizar a sua pontuação.
+
+Terceira iteração (is_max = False, depth = 2):
+Agora, de novo, é a vez do jogador minimizador (OPPONENT).
+A função continua esse processo de simular jogadas, alternando entre os jogadores.
+As chamadas recursivas continuam até que o jogo termine (alguém ganhou, perdeu ou deu empate) ou até que a profundidade máxima seja atingida.
