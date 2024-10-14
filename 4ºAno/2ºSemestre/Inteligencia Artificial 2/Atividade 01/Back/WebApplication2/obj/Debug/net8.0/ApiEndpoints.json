@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "ImageController",
+    "Method": "ConvertImage",
+    "RelativePath": "api/Image/convert-image",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "image",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

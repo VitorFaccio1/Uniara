@@ -1,178 +1,101 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>Produto Gemini</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de Imagem</title>
     <style>
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #eef2f3;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
         }
 
-        #app {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            color: #333;
-            font-size: 2.5em;
+            width: 300px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
             margin-bottom: 20px;
         }
 
         button {
-            padding: 8px 10px; 
-            background-color: #007BFF;
-            color: #fff;
+            background-color: #007bff;
+            color: white;
             border: none;
-            border-radius: 5px;
+            padding: 10px 20px;
             cursor: pointer;
-            font-size: 0.9em;
-            margin: 0 5px; 
-            transition: background-color 0.3s;
+            border-radius: 5px;
+            font-size: 16px;
         }
 
         button:hover {
             background-color: #0056b3;
         }
 
-        #symbols-list {
+        #mensagemResposta {
             margin-top: 20px;
+            font-weight: bold;
+            background-color: #e7f1ff;
+            border-left: 4px solid #007bff;
             padding: 10px;
-            border: 1px solid #ddd;
             border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-
-        .symbol-item {
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            background-color: #e7f3ff;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center; 
-            justify-content: space-between; 
-        }
-
-        .symbol-item:hover {
-            background-color: #d4ebff;
-        }
-
-        .ticker-info {
-            margin-top: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f1f1f1;
-            font-family: monospace;
-            overflow-x: auto;
+            text-align: left;
+            white-space: pre-wrap;
         }
     </style>
 </head>
 <body>
-    <div id="app">
-        <h1>Dados de Criptomoedas Gemini</h1>
-        <button id="load-symbols">Carregar moedas</button>
-        <div id="symbols-list"></div>
+    <div class="container">
+        <h2>Gerador de Respsotas</h2>
+        <input type="file" id="inputImagem" accept="image/*">
+        <button id="botaoUpload">Enviar Imagem</button>
+        <p id="mensagemResposta"></p>
     </div>
+
     <script>
-        document.getElementById('load-symbols').addEventListener('click', async function () {
-            const response = await fetch('https://localhost:44380/api/gemini/symbols');
-            const symbols = await response.json();
-            
-            const symbolsList = document.getElementById('symbols-list');
-            symbolsList.innerHTML = '';
-            
-            symbols.forEach(symbol => {
-                const symbolItem = document.createElement('div');
-                symbolItem.textContent = symbol;
-                symbolItem.className = 'symbol-item';
+        document.getElementById("botaoUpload").addEventListener("click", async function () {
+            const inputImagem = document.getElementById("inputImagem");
+            const arquivo = inputImagem.files[0];
+            const mensagemResposta = document.getElementById("mensagemResposta");
 
-                const detailsButton = document.createElement('button');
-                detailsButton.textContent = 'Ver Detalhes';
-                detailsButton.addEventListener('click', async (e) => {
-                    await Details(symbol, symbolItem);
+            if (!arquivo) {
+                mensagemResposta.textContent = "Selecione uma imagem.";
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("image", arquivo);
+
+            try {
+                const resposta = await fetch("https://localhost:7196/api/Image/convert-image", {
+                    method: "POST",
+                    body: formData,
                 });
 
-                const tickerButton = document.createElement('button');
-                tickerButton.textContent = 'Ver Marcador';
-                tickerButton.addEventListener('click', async (e) => {
-                    await Ticker(symbol, symbolItem);
-                });
-
-                const buyOrderButton = document.createElement('button');
-                buyOrderButton.textContent = 'Ordens de Compras';
-                buyOrderButton.addEventListener('click', async (e) => {
-                    await Book(symbol, true, symbolItem);
-                });
-
-                const sellOrderButton = document.createElement('button');
-                sellOrderButton.textContent = 'Ordens de Vendas';
-                sellOrderButton.addEventListener('click', async (e) => {
-                    await Book(symbol, false, symbolItem);
-                });
-
-                symbolItem.appendChild(detailsButton);
-                symbolItem.appendChild(tickerButton);
-                symbolItem.appendChild(buyOrderButton);
-                symbolItem.appendChild(sellOrderButton);
-                symbolsList.appendChild(symbolItem);
-            });
+                if (resposta.ok) {
+                    const dados = await resposta.text();
+                    mensagemResposta.textContent = "Resposta: " + dados;
+                } else {
+                    mensagemResposta.textContent = "Falha no upload: " + resposta.statusText;
+                }
+            } catch (erro) {
+                mensagemResposta.textContent = "Erro: " + erro.message;
+            }
         });
-
-        async function Details(symbol, symbolItem) {
-            const existingInfo = symbolItem.querySelector('.info');
-            if (existingInfo) {
-                existingInfo.remove();
-            } else {
-                const response = await fetch(`https://localhost:44380/api/gemini/details/${symbol}`);
-                const detailData = await response.json();
-                
-                const detailInfoDiv = document.createElement('div');
-                detailInfoDiv.className = 'info';
-                detailInfoDiv.innerHTML = `<pre>${JSON.stringify(detailData, null, 2)}</pre>`;
-                symbolItem.appendChild(detailInfoDiv);
-            }
-        }
-
-        async function Ticker(symbol, symbolItem) {
-            const existingInfo = symbolItem.querySelector('.info');
-            if (existingInfo) {
-                existingInfo.remove();
-            } else {
-                const response = await fetch(`https://localhost:44380/api/gemini/ticker/${symbol}`);
-                const tickerData = await response.json();
-                
-                const tickerInfoDiv = document.createElement('div');
-                tickerInfoDiv.className = 'info';
-                tickerInfoDiv.innerHTML = `<pre>${JSON.stringify(tickerData, null, 2)}</pre>`;
-                symbolItem.appendChild(tickerInfoDiv);
-            }
-        }
-
-        async function Book(symbol, buy, symbolItem) {
-            const existingInfo = symbolItem.querySelector('.info');
-            if (existingInfo) {
-                existingInfo.remove();
-            } else {
-                const response = await fetch(`https://localhost:44380/api/gemini/book/${symbol}/${buy}`);
-                const orderBookData = await response.json();
-                
-                const orderBookInfoDiv = document.createElement('div');
-                orderBookInfoDiv.className = 'info';
-                orderBookInfoDiv.innerHTML = `<pre>${JSON.stringify(orderBookData, null, 2)}</pre>`;
-                symbolItem.appendChild(orderBookInfoDiv);
-            }
-        }
     </script>
 </body>
 </html>
