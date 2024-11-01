@@ -1,0 +1,5 @@
+nome: Ana, idade: 30, sexo: F, cargo: Desenvolvedora, salario: 5000
+nome: Bruno, idade: 28, sexo: M, cargo: Designer, salario: 4500
+nome: Carla, idade: 35, sexo: F, cargo: Gerente, salario: 7000
+nome: Daniel, idade: 26, sexo: M, cargo: Analista, salario: 4000
+nome: Eduarda, idade: 40, sexo: F, cargo: Diretora, salario: 10000

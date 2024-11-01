@@ -1,0 +1,37 @@
+<metadados>
+    <registro>
+        <nome>Ana</nome>
+        <idade>30</idade>
+        <sexo>F</sexo>
+        <cargo>Desenvolvedora</cargo>
+        <salario>5000</salario>
+    </registro>
+    <registro>
+        <nome>Bruno</nome>
+        <idade>28</idade>
+        <sexo>M</sexo>
+        <cargo>Designer</cargo>
+        <salario>4500</salario>
+    </registro>
+    <registro>
+        <nome>Carla</nome>
+        <idade>35</idade>
+        <sexo>F</sexo>
+        <cargo>Gerente</cargo>
+        <salario>7000</salario>
+    </registro>
+    <registro>
+        <nome>Daniel</nome>
+        <idade>26</idade>
+        <sexo>M</sexo>
+        <cargo>Analista</cargo>
+        <salario>4000</salario>
+    </registro>
+    <registro>
+        <nome>Eduarda</nome>
+        <idade>40</idade>
+        <sexo>F</sexo>
+        <cargo>Diretora</cargo>
+        <salario>10000</salario>
+    </registro>
+</metadados>
