@@ -23,8 +23,8 @@ public sealed class MetadadoService : IMetadadoService
                 {
                     parts = new[]
                     {
-                        new {  text = $"Me de o nome e o tipo de dado das colunas existente nesse texto: {text}" +
-                        ", retorne apenas as nomes e tipos de coluna no formato json, mais nenhuma informação" }
+                        new {  text = $"Retorne apenas o nome e tipo de dados de cada coluna no formato json sem array e dentro de chaves existente nesse texto: {text}," +
+                        $" sem mais nenhuma outra informação alem do solicitado" }
                     }
                 }
             }

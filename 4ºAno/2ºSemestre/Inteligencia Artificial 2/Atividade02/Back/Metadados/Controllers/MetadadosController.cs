@@ -41,7 +41,7 @@ namespace Metadados.Controllers
             {
                 var processedContent = await _metadadoService.ProcessFileContentAsync(content);
 
-                var metadado = GetMetadado(file, ref processedContent);
+                var metadado = GetMetadado(file, processedContent);
 
                 _context.Metadado.Add(metadado);
 
@@ -55,7 +55,7 @@ namespace Metadados.Controllers
             }
         }
 
-        private static Metadado GetMetadado(IFormFile file, ref string processedContent)
+        private static Metadado GetMetadado(IFormFile file, string processedContent)
         {
             processedContent = processedContent.Trim('`').Replace("json", "");
 
