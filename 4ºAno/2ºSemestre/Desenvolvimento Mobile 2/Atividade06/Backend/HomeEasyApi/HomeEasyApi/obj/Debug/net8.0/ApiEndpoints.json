@@ -1,0 +1,28 @@
+[
+  {
+    "ContainingType": "HomeEasyApi.Controllers.AnunciosController",
+    "Method": "List",
+    "RelativePath": "Anuncios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HomeEasyApi.Controllers.AnunciosController",
+    "Method": "Create",
+    "RelativePath": "Anuncios",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "anuncio",
+        "Type": "HomeEasyApi.Models.Anuncio",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
